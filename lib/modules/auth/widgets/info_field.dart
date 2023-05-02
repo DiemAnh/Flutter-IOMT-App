@@ -15,22 +15,10 @@ class InfoField extends StatefulWidget {
 }
 
 class _InfoFieldState extends State<InfoField> {
-  final _focusNode =FocusNode();
-  bool _isFocused = false;
   final _defaultBorder = Border.all(color: Colors.white,width: 1);
+  final _focusNode =FocusNode();
   final _focusedBorder = Border.all(color: Colors.white,width:2);
-
-  @override
-  void initState(){
-    _focusNode.addListener(_onFocusChange);
-    super.initState();
-  }
-  
-  void _onFocusChange(){
-    setState(() {
-      _isFocused = _focusNode.hasFocus;
-    });
-  }
+  bool _isFocused = false;
 
   @override
   void dispose(){
@@ -39,12 +27,24 @@ class _InfoFieldState extends State<InfoField> {
   }
 
   @override
+  void initState(){
+    _focusNode.addListener(_onFocusChange);
+    super.initState();
+  }
+
+  void _onFocusChange(){
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return  Container(
       decoration: BoxDecoration(
         border: _isFocused? _focusedBorder:_defaultBorder,
         borderRadius: BorderRadius.circular(8),
-        color: Colors.transparent,
+        color: Colors.transparent, 
       ),
       child: TextField(
         controller: widget.controller,
@@ -52,11 +52,11 @@ class _InfoFieldState extends State<InfoField> {
           border: InputBorder.none,
           hintText: widget.hintText,
           hintStyle: const TextStyle(
-            color: Colors.white,
+            color: Color.fromRGBO(255, 255, 255, 0.5),
           ),
           contentPadding: const EdgeInsets.all(16),
         ),
-        style: TextStyles.t16R,
+        style: TextStyles.t16R.copyWith(color: Colors.white),
         focusNode: _focusNode,
       ),
     );

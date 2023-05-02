@@ -71,7 +71,6 @@ class LoginScreen extends StatelessWidget {
         SafeArea(
             child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
-            // TODO: implement listener
             if (state is AuthStateInProgress) {
               _showLoadingDialog(context);
             }

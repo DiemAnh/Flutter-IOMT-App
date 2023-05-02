@@ -39,6 +39,7 @@ class _Station1BottomNavigatorState extends State<Station1BottomNavigator> {
         child: (_pages.elementAt(_selectedIndex)),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -50,7 +51,7 @@ class _Station1BottomNavigatorState extends State<Station1BottomNavigator> {
             label: 'Search',
             backgroundColor: Colors.white),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline_sharp),
+            icon: Icon(Icons.add_circle_outline_sharp,),
             label:'New record',
             backgroundColor: Colors.white),
           BottomNavigationBarItem(

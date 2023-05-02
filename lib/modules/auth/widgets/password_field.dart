@@ -53,11 +53,11 @@ class _PasswordFieldState extends State<PasswordField> {
           border: InputBorder.none,
           hintText: widget.hintText,
           hintStyle: const TextStyle(
-            color: Colors.white,
+            color: Color.fromRGBO(255, 255, 255, 0.5),
           ),
           contentPadding: const EdgeInsets.all(16),
         ),
-        style: TextStyles.t16R,
+        style: TextStyles.t16R.copyWith(color: Colors.white),
         focusNode: _focusNode,
       ),
     );
