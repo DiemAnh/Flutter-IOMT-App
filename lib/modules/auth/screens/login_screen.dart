@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/modules/auth/screens/station1_home_screen.dart';
+import 'package:my_app/modules/auth/screens/station1_home_screen.dart';
 import 'package:my_app/modules/auth/widgets/auth_title.dart';
 import 'package:my_app/modules/auth/widgets/login_form.dart';
 import 'package:my_app/themes/app_colors.dart';
@@ -15,6 +18,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../route/route_name.dart';
+import 'station1_home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -57,9 +61,32 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void _navigateToMain(BuildContext context, User user) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        RouteName.mainDemo, (route) => route.settings.name == RouteName.mainDemo);
+  void _navigateToMain(BuildContext context, User user) async{
+    try {
+      if (user != null) {
+        final userID = user.uid;
+
+        await FirebaseDatabase.instance
+        .ref()
+        .child("Users")
+        .child(userID)
+        .once()
+        .then((event) {
+          if ((event.snapshot.value as dynamic)['role']=='admin') {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteName.mainDemo, (route) => route.settings.name == RouteName.mainDemo);
+          } else if ((event.snapshot.value as dynamic)['role']=='user') {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteName.userPage1, (route) => route.settings.name == RouteName.userPage1);
+          }
+        }
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+    // Navigator.of(context).pushNamedAndRemoveUntil(
+    //     RouteName.mainDemo, (route) => route.settings.name == RouteName.mainDemo);
   }
 
   @override
